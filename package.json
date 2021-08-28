@@ -1,0 +1,46 @@
+{
+  "name": "i18nify",
+  "version": "1.0.0-alpha",
+  "description": "i18nify is a tool that provides internalization features to existing systems and apps by making static texts into translatable texts.",
+  "main": "index.js",
+  "repository": "https://github.com/batrdn/i18nify",
+  "author": "batrdn <baterdene.tsogoo220@gmail.com>",
+  "license": "Apache",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier -u --check .",
+    "format:fix": "prettier -u --write .",
+    "lint": "eslint src --ext .js,.ts,",
+    "lint-staged": "lint-staged",
+    "test": "jest",
+    "test:coverage": "yarn test --coverage --colors",
+    "prepare": "husky install && yarn build",
+    "tsc:check": "tsc --noEmit",
+    "prepublish": "yarn build",
+    "release": "semantic-release"
+  },
+  "dependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-typescript": "^7.15.0",
+    "@types/jest": "^27.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jest": "^24.4.0",
+    "husky": "^7.0.2",
+    "jest": "^27.1.0",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.3.2",
+    "semantic-release": "^17.4.7",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
+  }
+}
