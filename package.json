@@ -13,7 +13,7 @@
     "format:fix": "prettier -u --write .",
     "lint": "eslint src --ext .js,.ts,",
     "lint-staged": "lint-staged",
-    "start": "webpack serve --open",
+    "start": "yarn run server && webpack serve --open",
     "test": "jest",
     "test:coverage": "yarn test --coverage --colors",
     "prepare": "husky install && yarn build",
