@@ -1,7 +1,6 @@
 import * as dotenv from 'dotenv';
 import getFilesRecursively from './read-files';
 import { readFileSync } from 'fs';
-import { extractJs } from '../extractors';
 import { extname, basename } from 'path';
 import { FileExtensions } from '../constants/file-extensions';
 import Nedb from 'nedb';
@@ -37,13 +36,14 @@ const startServer = async (): Promise<void> => {
 
   if (process.env.PROJECT_PATH) {
     const files = getFilesRecursively(process.env.PROJECT_PATH);
+    let index = 1;
     for (const file of files) {
       const data = readFileSync(file, 'utf-8');
       const extension = extname(file);
 
-      if (extension === FileExtensions.JS) {
-        await saveValidWords(file, extractJs(data));
-      } else if (extension === FileExtensions.HTML) {
+      if (extension === FileExtensions.HTML) {
+        console.log(`Loading ${basename(file)}: ${index}/${files.length}`);
+        index++;
         await saveValidWords(file, extractHTML(data));
       }
     }
@@ -62,9 +62,9 @@ const startServer = async (): Promise<void> => {
     res.send({ entries });
   });
 
-  app.post('/replace', (req, res) => {
+  app.post('/replace', async (req, res) => {
     const { path, word, translation, translationKey } = req.body;
-    const isReplaced = replace(path, word, translation, translationKey);
+    const isReplaced = await replace(path, word, translation, translationKey);
     res.send({ isReplaced });
   });
 
