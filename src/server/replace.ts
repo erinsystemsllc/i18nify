@@ -21,6 +21,7 @@ const replaceHTML = async (
         node.nodeValue === word
       ) {
         node.parentElement?.setAttribute('translate', `${translationKey}`);
+        node.parentElement?.removeChild(node);
       }
 
       if (!node?.hasChildNodes() && !node?.nextSibling) {
@@ -29,7 +30,7 @@ const replaceHTML = async (
     });
   });
   await addTranslationKeys;
-  return dom.window.document.body.innerHTML.replace(new RegExp(word, 'g'), '');
+  return dom.window.document.body.innerHTML;
 };
 
 const replace = async (

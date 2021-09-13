@@ -68,4 +68,30 @@ describe('Dom traversal', () => {
     await traverse;
     console.log(dom.serialize());
   });
+
+  test('remove node', async () => {
+    const dom = new JSDOM(`
+      <cashbook-stats-wrapper>
+        <div>
+          <p>Hello, World</p>
+        </div>
+      </cashbook-stats-wrapper>
+      <span>Foo bar</span>
+    `);
+
+    const traverse = new Promise<void>((resolve) => {
+      domWalker(dom.window.document.body, (node) => {
+        if (node?.nodeType === 3 && node.nodeValue && !isEmpty(node.nodeValue.trim())) {
+          node.parentElement?.setAttribute('translation', 'translation.key');
+          node.parentElement?.removeChild(node);
+        }
+        if (!node?.hasChildNodes() && !node?.nextSibling) {
+          resolve();
+        }
+      });
+    });
+
+    await traverse;
+    console.log(dom.serialize());
+  });
 });
