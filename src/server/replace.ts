@@ -2,6 +2,7 @@ import { extname } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
 import { FileExtensions } from '../constants/file-extensions';
 import { HtmlReplacerStrategy } from '../constants/html-replacer-strategy';
+import writeToTranslationFiles from 'src/server/write-to-translation-files';
 
 const replaceAngularHTML = (source: string, word: string, translationKey: string): string => {
   return source.replace(new RegExp(word, 'g'), `{{ '${translationKey}' | i18next }}`);
@@ -17,12 +18,9 @@ const replace = (
   translation: string,
   translationKey: string,
 ): boolean => {
-  console.log(translation);
   const fileExtension = extname(path);
 
-  if (fileExtension === FileExtensions.JS) {
-    // TODO implement JavaScript replacer
-  } else if (fileExtension === FileExtensions.HTML) {
+  if (fileExtension === FileExtensions.HTML) {
     const file = readFileSync(path, 'utf-8');
     const replacedSource =
       process.env.HTML_REPLACER_STRATEGY === HtmlReplacerStrategy.Angular
@@ -35,6 +33,8 @@ const replace = (
       console.error(e);
       return false;
     }
+
+    writeToTranslationFiles(translationKey, word, translation);
 
     return true;
   }
