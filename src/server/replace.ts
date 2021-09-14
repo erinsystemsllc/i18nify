@@ -8,7 +8,7 @@ const replaceHTML = async (
   word: string,
   translationKey: string,
 ): Promise<string> => {
-  return source.replace(new RegExp(word, 'g'), `{{::'${translationKey}|translate'}}`);
+  return source.replace(new RegExp(word.trim(), 'g'), `{{::'${translationKey}|translate'}}`);
 };
 
 const replace = async (
