@@ -119,6 +119,7 @@ const EditorTable: FunctionComponent<EditorTableProps> = ({ data }) => {
       pagination={{ pageSize: 100 }}
       components={components}
       rowClassName={() => 'editable-row'}
+      summary={(data) => <div>Found {data.length} entries</div>}
       columns={columns.map((col) => {
         if (!col.editable) {
           return col;
